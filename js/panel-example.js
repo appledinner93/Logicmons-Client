@@ -1,0 +1,28 @@
+function _inheritsLoose(subClass,superClass){subClass.prototype=Object.create(superClass.prototype);subClass.prototype.constructor=subClass;subClass.__proto__=superClass;}/**
+ * Example Panel
+ *
+ * Just an example panel for creating new panels/popups
+ *
+ * @author Guangcong Luo <guangcongluo@gmail.com>
+ * @license AGPLv3
+ */var
+
+ExampleRoom=function(_PSRoom){_inheritsLoose(ExampleRoom,_PSRoom);
+
+function ExampleRoom(options){var _this;
+_this=_PSRoom.call(this,options)||this;_this.classType='example';return _this;
+}return ExampleRoom;}(PSRoom);var
+
+
+ExamplePanel=function(_PSRoomPanel){_inheritsLoose(ExamplePanel,_PSRoomPanel);function ExamplePanel(){return _PSRoomPanel.apply(this,arguments)||this;}var _proto=ExamplePanel.prototype;_proto.
+render=function render(){
+var room=this.props.room;
+return preact.h(PSPanelWrapper,{room:room},
+preact.h("div",{"class":"mainmessage"},preact.h("p",null,"Loading...")));
+
+};return ExamplePanel;}(PSRoomPanel);
+
+
+PS.roomTypes['example']={
+Model:ExampleRoom,
+Component:ExamplePanel};
