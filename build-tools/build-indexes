@@ -20,8 +20,10 @@ child_process.execSync('npm run build', {cwd: 'data/Pokemon-Showdown'});
 console.log("DONE");
 
 const Dex = require('../data/Pokemon-Showdown/.sim-dist/dex').Dex;
+Dex.includeModData()
 const toID = Dex.getId;
 process.stdout.write("Loading gen 6 data... ");
+Object.assign(Dex.data.Movedex, Dex.dexes.logic.data.Movedex)
 Dex.includeData();
 console.log("DONE");
 
@@ -806,8 +808,12 @@ console.log("DONE");
 process.stdout.write("Building `data/pokedex.js`... ");
 
 {
-	const Pokedex = requireNoCache('../data/Pokemon-Showdown/data/pokedex.js').BattlePokedex;
+	const Pokedex = requireNoCache('../data/Pokemon-Showdown/data/pokedex.js').BattlePokedex
+    const LogicPokedex = requireNoCache('../data/Pokemon-Showdown/data/mods/logic/pokedex.js').BattlePokedex;
 	for (const id in Pokedex) {
+        if(id in LogicPokedex) {
+            Object.assign(Pokedex[id], LogicPokedex[id]);
+        }
 		const entry = Pokedex[id];
 		if (Dex.data.FormatsData[id]) {
 			// console.log('formatsentry:' + id);
@@ -824,6 +830,7 @@ process.stdout.write("Building `data/pokedex.js`... ");
 }
 
 console.log("DONE");
+
 
 /*********************************************************
  * Build moves.js
